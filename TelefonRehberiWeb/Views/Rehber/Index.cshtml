@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Rehber>
+@{
+    ViewData["Title"] = "Rehber";
+}
+<a asp-controller="account" asp-action=logout>Logout</a>
+
+<div class="p-4 w-75 mx-auto">
+        
+        <h1>Rehber </h1>
+  
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Adress</th>
+                <th scope="col">EMail</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Name</td>
+                    <td>@item.Surname</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Adress</td>
+                    <td>@item.Email</td>
+                    <td>@item.Notes</td>
+                    <td><a href="Rehber/Add/@item.Id" class="btn btn-success">Edit</a>
+                    <td>
+                        <a href="Rehber/Delete/@item.Id" class="btn btn-danger" onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')"><i class="la la-trash"></i>Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br /> <br />
+      <div class="col-md-4 mx-auto">
+    
+        <img src="/image/agenda.png" />
+    </div>
+
+</div>
+
