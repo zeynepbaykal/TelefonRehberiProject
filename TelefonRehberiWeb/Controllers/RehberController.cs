@@ -10,27 +10,66 @@ namespace TelefonRehberiWeb.Controllers
 
         public RehberController(ApplicationDbContext db)
         {
+           
             _db = db;
         }
 
         public IActionResult Index()
         {
+            string UserId = ((HttpContext.Session.GetString("userId")));
+            bool a = String.IsNullOrEmpty(UserId);
+
+            if (UserId != "0")
+            {
+                if (!String.IsNullOrEmpty(UserId))
+                {
+                    IEnumerable<Rehber> l = _db.Rehbers.Where(w => w.UserId == Convert.ToInt32(UserId)).ToList();
+                    return View(l);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Account");
+                }
+               
+            }
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
             //var l = _db.Rehbers.ToList();
-            IEnumerable<Rehber> l = _db.Rehbers.ToList();
-            return View(l);
+           
+          
         }
 
         [HttpGet]
         public IActionResult Add(int id)
         {
-         
+            string UserId = ((HttpContext.Session.GetString("userId")));
+            bool a = String.IsNullOrEmpty(UserId);
 
-            if (id != 0)
+            if (UserId != "0")
             {
-                Rehber re = _db.Rehbers.FirstOrDefault(f => f.Id == id);
-                return View(re);
+                if (!String.IsNullOrEmpty(UserId))
+                {
+                    if (id != 0)
+                    {
+                        Rehber re = _db.Rehbers.FirstOrDefault(f => f.Id == id);
+                        return View(re);
+                    }
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Account");
+                }
+
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
+
+           
         }
 
         [HttpPost]
@@ -38,13 +77,16 @@ namespace TelefonRehberiWeb.Controllers
         {
         
 
+
             if (id == 0)
             {
+                r.UserId =Convert.ToInt32(HttpContext.Session.GetString("userId"));
                 _db.Rehbers.Add(r);
             }
             else
             {
                 Rehber re = _db.Rehbers.FirstOrDefault(f => f.Id == r.Id);
+               
                 re.Adress = r.Adress;
                 re.Email = r.Email;
                 re.PhoneNumber = r.PhoneNumber;

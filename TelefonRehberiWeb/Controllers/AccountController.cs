@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using TelefonRehberiWeb.Data;
 using TelefonRehberiWeb.ExtraClasses;
 using TelefonRehberiWeb.Models;
@@ -9,7 +10,7 @@ namespace TelefonRehberiWeb.Controllers
     [Route ("account")]
     public class AccountController : Controller
     {
-
+        private List<User> user;
         private readonly ApplicationDbContext _db;
 
       
@@ -32,13 +33,14 @@ namespace TelefonRehberiWeb.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            IEnumerable<User> r = _db.Users.ToList();
+            return View("Welcome",r);
         }
 
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login(string username, string password, User user)
+        public IActionResult Login(string username, string password,int id=0 )
         {
             //user.Password = Sha256Converter.ComputeSha256Hash(user.Password);
             //if (user.Password != null)
@@ -52,15 +54,23 @@ namespace TelefonRehberiWeb.Controllers
             //    return View("Index");
             //}
 
-            user.Password = Sha256Converter.ComputeSha256Hash(user.Password);
-            var account = accountService.Login(username, password);
-            if (account != null)
-            {
-                HttpContext.Session.SetString("username", username);
-                return RedirectToAction("welcome");
+          
+            
+
+            password = Sha256Converter.ComputeSha256Hash(password);
+            //var account = accountService.Login(username, password);
+            //if (id != 0)
+            
+              //r = _db.Users.ToList();
+                User r = _db.Users.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
+               
+                if(r!=null) {
+                HttpContext.Session.SetString("userId", r.UserId.ToString());
+                return View("welcome",r);
             }
             else
             {
+                HttpContext.Session.SetString("userId", "0");
                 ViewBag.msg = "Invalid";
                 return View("Index");
             }
@@ -74,7 +84,7 @@ namespace TelefonRehberiWeb.Controllers
             if (id != 0)
             {
                 //users.Password = Sha256Converter.ComputeSha256Hash(users.Password);
-                User re = _db.Users.FirstOrDefault(f => f.Id == id);
+                User re = _db.Users.FirstOrDefault(f => f.UserId == id);
                 return View(re);
             }
             return View();
@@ -93,7 +103,7 @@ namespace TelefonRehberiWeb.Controllers
             }
             else
             {
-                Rehber re = _db.Rehbers.FirstOrDefault(f => f.Id == r.Id);
+                Rehber re = _db.Rehbers.FirstOrDefault(f => f.Id == r.UserId);
                 //re.Adress = r.Adress;
                 //re.Email = r.Email;
                 //re.PhoneNumber = r.PhoneNumber;
@@ -112,14 +122,14 @@ namespace TelefonRehberiWeb.Controllers
         [Route("welcome")]
         public IActionResult Welcome()
         {
-            ViewBag.username= HttpContext.Session.GetString("username" );
+            ViewBag.username= HttpContext.Session.GetString("userId");
             return View("Welcome");
         }
 
         [Route("logout")]
         public IActionResult LogOut()
         {
-             HttpContext.Session.Remove("username");
+             HttpContext.Session.Remove("userId");
             return View("index");
         }
 
