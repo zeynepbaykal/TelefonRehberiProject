@@ -21,9 +21,9 @@ namespace TelefonRehberiWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add(User users,int id)
+        public IActionResult Add(int id)
         {
-            users.Id = Convert.ToInt32(HttpContext.Session.GetString("ID"));
+         
 
             if (id != 0)
             {
@@ -34,9 +34,9 @@ namespace TelefonRehberiWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(User users,Rehber r, int id = 0)
+        public IActionResult Add(Rehber r, int id = 0)
         {
-            users.Id = Convert.ToInt32(HttpContext.Session.GetString("ID"));
+        
 
             if (id == 0)
             {
