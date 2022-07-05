@@ -1,4 +1,10 @@
-﻿@model IEnumerable<Rehber>
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@using TelefonRehberiWeb.Models
+
+
+@model IPagedList<Rehber>
+@*@model IEnumerable<Rehber>*@
 @{
     ViewData["Title"] = "Rehber";
 }
@@ -54,9 +60,11 @@
                 </tr>
             }
         </tbody>
+         @Html.PagedListPager((IPagedList)Model,  p =>  Url.Action("Index", new{p}))
     </table>
     <br /> <br />
-      <div class="col-md-4 mx-auto">
+      <div class="col-md-4 mx-auto">  
+
     
         <img src="/image/agenda.png" />
     </div>
@@ -70,8 +78,8 @@
       </div>
     </div>
   </div>
-</section>
 
+</section>
 
 @*<div class="p-4 w-75 mx-auto">
         

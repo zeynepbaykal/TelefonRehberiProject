@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TelefonRehberiWeb.Data;
 using TelefonRehberiWeb.Models;
+using X.PagedList;
+using X.PagedList.Mvc;
 
 namespace TelefonRehberiWeb.Controllers
 {
@@ -13,9 +15,11 @@ namespace TelefonRehberiWeb.Controllers
            
             _db = db;
         }
-
-        public IActionResult Index()
+     
+        public IActionResult Index(int p = 1)
         {
+            var firmalar = _db.Rehbers.ToPagedList(p, 2);
+            return View(firmalar);
             string UserId = ((HttpContext.Session.GetString("userId")));
             bool a = String.IsNullOrEmpty(UserId);
 
@@ -30,15 +34,15 @@ namespace TelefonRehberiWeb.Controllers
                 {
                     return RedirectToAction("Index", "Account");
                 }
-               
+
             }
             else
             {
                 return RedirectToAction("Index", "Account");
             }
             //var l = _db.Rehbers.ToList();
-           
-          
+
+
         }
 
         [HttpGet]

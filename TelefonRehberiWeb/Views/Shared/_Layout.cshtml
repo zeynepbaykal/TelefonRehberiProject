@@ -20,6 +20,11 @@
 
 				<div class="collapse navbar-collapse" id="navbarColor01">
 					<ul class="navbar-nav me-auto">
+
+						@if (Context.Session.GetString("userId") != null)
+                        {
+
+
 						@*<li class="nav-item">
 							<a class="nav-link active" href="#">
 								Home
@@ -35,10 +40,14 @@
 						@*<li class="nav-item">
 							<a class="nav-link" href="#">About</a>
 						</li>*@
+						}
 					</ul>
 					<form class="d-flex" action="../../Rehber/Search" method="post">
+						@if (Context.Session.GetString("userId") != null)
+                        {
 						<input class="form-control me-sm-2" type="text" placeholder="Search" name="search">
 						<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+						}
 					</form>
 				</div>
 			</div>
@@ -51,9 +60,9 @@
 	</div>
 
 	<footer class="border-top footer text-muted">
-		<div class="container">
+		@*<div class="container">
 			&copy; 2022 - TelefonRehberiWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-		</div>
+		</div>*@
 	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
