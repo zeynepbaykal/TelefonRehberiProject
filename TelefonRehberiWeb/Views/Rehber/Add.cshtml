@@ -5,7 +5,7 @@
 
 <a asp-controller="account" asp-action=logout>Logout</a>
 
-<form id="Add" action="/Rehber/add" method="post" class="p-4 w-75 mx-auto">
+@*<form id="Add" action="/Rehber/add" method="post" class="p-4 w-75 mx-auto">
     <div class="form-row">
         <div class="single-product-item">
             <img src="/image/people.png" />
@@ -57,5 +57,84 @@
             <input type="submit" class="btn btn-primary" value="Kaydet" />
         }
     }
-</form>
+</form>*@
 
+<section class="vh-100" style="background-color: #9A616D;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        @*<div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img src="https://i4.hurimg.com/i/hurriyet/75/750x422/58c2520ac03c0e22948311cf.jpg"
+                                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>*@
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+
+                                <form id="Add" action="/Rehber/add" method="post" class="p-4 w-75 mx-auto">
+                                    <div class="form-row">
+                                        <div class="single-product-item">
+                                            <img src="/image/people.png" />
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="inputName">Id</label>
+                                            <input asp-for="Id" type="text" class="form-control" id="Id" placeholder="Id" disabled="false">
+                                            @{
+                                                if (Model != null)
+                                                {
+                                                    <input type="hidden" value="@Model.Id" name="Id" />
+                                                }
+                                            }
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputName">Name</label>
+                                            <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Name">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Surname</label>
+                                            <input asp-for="Surname" type="text" class="form-control" id="Surname" placeholder="Surname">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Phone Number</label>
+                                        <input asp-for="PhoneNumber" type="number" class="form-control" id="PhoneNumber" placeholder="Phone Number">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Email</label>
+                                        <input asp-for="Email" type="email" class="form-control" id="Email" placeholder="Email">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Adress</label>
+                                        <input asp-for="Adress" type="adress" class="form-control" id="Adress" placeholder="Adress">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Notes</label>
+                                        <input asp-for="Notes" type="text" class="form-control" id="Notes" placeholder="Notes ">
+                                    </div>
+                                    <br /> <br />
+                                    @{
+                                        if (Model != null)
+                                        {
+                                            <input type="submit" class="btn btn-primary" value="Güncelle" />
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" class="btn btn-primary" value="Kaydet" />
+                                        }
+                                    }
+                                </form>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

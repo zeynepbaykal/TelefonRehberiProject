@@ -1,6 +1,6 @@
 ﻿<h3>Register</h3>
 @ViewBag.msg
-<form method="post"asp-controller="account" asp-action="register">
+@*<form method="post"asp-controller="account" asp-action="register">
     Username <input type="text" name="username"/>
     <br />
      Password <input type="password" name="password"/>
@@ -8,4 +8,71 @@
      <br />
    <input type="submit" value="Register"/>
 
-</form>
+</form>*@
+
+
+
+<!-- Section: Design Block -->
+<section class="text-center text-lg-start">
+  <style>
+    .cascading-right {
+      margin-right: -50px;
+    }
+
+  
+  </style>
+
+  <!-- Jumbotron -->
+  <div class="container py-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="card cascading-right" style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+            ">
+          <div class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Sign up now</h2>
+            <form method="post"asp-controller="account" asp-action="register">
+              <!-- 2 column grid layout with text inputs for the first names -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input  type="text" name="username" class="form-control" />
+                    <label class="form-label" for="form3Example1">User Name</label>
+                  </div>
+                </div>
+                
+              </div>
+
+             
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+        <input type="password" name="password"/>
+                <label class="form-label" for="form3Example4">Password</label>
+              </div>
+
+             
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                Sign up
+              </button>
+                <p class="mb-5 pb-lg-2" style="color: #393f81;">Do have an account? <a href="/Account/Index/" 
+                      style="color: #393f81;">Login here</a></p>
+
+             
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4"
+          alt="" />
+      </div>
+    </div>
+  </div>
+  <!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
