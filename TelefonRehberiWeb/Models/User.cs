@@ -11,5 +11,6 @@ namespace TelefonRehberiWeb.Models
         public string Username { get; set; }
         public string? Password { get; set; }
         public List<Rehber> RehberId { get; set; }
+        public string? UserIp {get; set; }
     }
 }

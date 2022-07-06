@@ -18,8 +18,9 @@ namespace TelefonRehberiWeb.Controllers
      
         public IActionResult Index(int p = 1)
         {
-            var firmalar = _db.Rehbers.ToPagedList(p, 2);
-            return View(firmalar);
+          
+            //var firma = _db.Rehbers.ToPagedList(p, 2);
+            //return View(firma);
             string UserId = ((HttpContext.Session.GetString("userId")));
             bool a = String.IsNullOrEmpty(UserId);
 
@@ -27,7 +28,8 @@ namespace TelefonRehberiWeb.Controllers
             {
                 if (!String.IsNullOrEmpty(UserId))
                 {
-                    IEnumerable<Rehber> l = _db.Rehbers.Where(w => w.UserId == Convert.ToInt32(UserId)).ToList();
+                    ViewBag.username = HttpContext.Session.GetString("userId");
+                    IEnumerable<Rehber> l = _db.Rehbers.Where(w => w.UserId == Convert.ToInt32(UserId)).ToList().ToPagedList(p, 2);
                     return View(l);
                 }
                 else
@@ -117,16 +119,16 @@ namespace TelefonRehberiWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Search(string search)
+        public IActionResult Search(string search, int p=1)
         {
             IEnumerable<Rehber> r;
             if (String.IsNullOrEmpty(search))
             {
-                r = _db.Rehbers.ToList();
+                r = _db.Rehbers.ToPagedList(p, 4);
             }
             else
             {
-                r = _db.Rehbers.Where(w => w.Name.Contains(search)).ToList();
+                r = _db.Rehbers.Where(w => w.Name.Contains(search)).ToPagedList(p,4);
             }
             //Rehber r = _db.Rehbers.FirstOrDefault(f => f.Name == id);
             return View("Index", r);

@@ -7,16 +7,16 @@ using TelefonRehberiWeb.Services;
 
 namespace TelefonRehberiWeb.Controllers
 {
-    [Route ("account")]
+    [Route("account")]
     public class AccountController : Controller
     {
         private List<User> user;
         private readonly ApplicationDbContext _db;
 
-      
+
         private AccountService accountService;
 
-        public AccountController(AccountService _accountService , ApplicationDbContext db)
+        public AccountController(AccountService _accountService, ApplicationDbContext db)
         {
             accountService = _accountService;
             _db = db;
@@ -34,13 +34,13 @@ namespace TelefonRehberiWeb.Controllers
         public IActionResult Login()
         {
             IEnumerable<User> r = _db.Users.ToList();
-            return View("Welcome",r);
+            return View("Welcome", r);
         }
 
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login(string username, string password,int id=0 )
+        public IActionResult Login(string username, string password, int id = 0)
         {
             //user.Password = Sha256Converter.ComputeSha256Hash(user.Password);
             //if (user.Password != null)
@@ -54,19 +54,20 @@ namespace TelefonRehberiWeb.Controllers
             //    return View("Index");
             //}
 
-          
-            
+
+
 
             password = Sha256Converter.ComputeSha256Hash(password);
             //var account = accountService.Login(username, password);
             //if (id != 0)
-            
-              //r = _db.Users.ToList();
-                User r = _db.Users.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
-               
-                if(r!=null) {
+
+            //r = _db.Users.ToList();
+            User r = _db.Users.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
+
+            if (r != null)
+            {
                 HttpContext.Session.SetString("userId", r.UserId.ToString());
-                return View("welcome",r);
+                return View("welcome", r);
             }
             else
             {
@@ -83,22 +84,26 @@ namespace TelefonRehberiWeb.Controllers
 
             if (id != 0)
             {
+                ViewBag.msg = "Success";
                 //users.Password = Sha256Converter.ComputeSha256Hash(users.Password);
                 User re = _db.Users.FirstOrDefault(f => f.UserId == id);
                 return View(re);
             }
+           
             return View();
         }
 
 
         [HttpPost]
         [Route("register")]
-        public IActionResult Register(User r, int id=0)
+        public IActionResult Register(User r, int id = 0)
         {
 
             if (id == 0)
             {
+              
                 r.Password = Sha256Converter.ComputeSha256Hash(r.Password);
+                ViewBag.msg = "Success";
                 _db.Users.Add(r);
             }
             else
@@ -113,23 +118,38 @@ namespace TelefonRehberiWeb.Controllers
                 //re.Name = r.Name;
                 _db.Rehbers.Update(re);
             }
-
+       
             _db.SaveChanges();
-            return RedirectToAction("Register");
+            ViewBag.msg = "Success";
+            return RedirectToAction("index");
+        
         }
 
 
         [Route("welcome")]
-        public IActionResult Welcome()
+        [HttpGet]
+        public IActionResult Welcome(User r,int id=0)
         {
-            ViewBag.username= HttpContext.Session.GetString("userId");
+
+            //if (id == 0)
+            //{
+            //    r.UserId = Convert.ToInt32(HttpContext.Session.GetString("userId"));
+            //    return View("Welcome");
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index");
+            //}
+
+            ViewBag.username = HttpContext.Session.GetString("userId");
             return View("Welcome");
         }
+
 
         [Route("logout")]
         public IActionResult LogOut()
         {
-             HttpContext.Session.Remove("userId");
+            HttpContext.Session.Remove("userId");
             return View("index");
         }
 

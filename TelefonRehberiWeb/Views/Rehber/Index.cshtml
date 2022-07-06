@@ -8,7 +8,7 @@
 @{
     ViewData["Title"] = "Rehber";
 }
-<a asp-controller="account" asp-action=logout>Logout</a>
+@*<a asp-controller="account" asp-action=logout>Logout</a>*@
 
 
 
@@ -55,12 +55,15 @@
                     <td>@item.Notes</td>
                     <td><a href="/Rehber/Add/@item.Id" class="btn btn-success">Edit</a>
                     <td>
-                        <a href="Rehber/Delete/@item.Id" class="btn btn-danger" onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')"><i class="la la-trash"></i>Delete</a>
+                        <a href="/Rehber/Delete/@item.Id" class="btn btn-danger" onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')"><i class="la la-trash"></i>Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
-         @Html.PagedListPager((IPagedList)Model,  p =>  Url.Action("Index", new{p}))
+         @Html.PagedListPager((IPagedList)Model,  p =>  Url.Action("Index", new{p, }),
+     new X.PagedList.Web.Common.PagedListRenderOptions { LiElementClasses = new string[] { "page-link" }, 
+     UlElementClasses = new string[] { "pagination justify-content-end" },
+     MaximumPageNumbersToDisplay = 5 })</h4>
     </table>
     <br /> <br />
       <div class="col-md-4 mx-auto">  

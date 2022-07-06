@@ -13,8 +13,8 @@
 </form>*@
 
 <br />
-<form method="post"  asp-action="login">
-<section class="vh-100" style="background-color: #9A616D;">
+<form method="post" asp-controller="account" asp-action="login">
+<section class="vh-100" style="background-color: #E5DA6D;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
@@ -31,7 +31,7 @@
 
                  
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
-
+                  @ViewBag.msg
                   <div class="form-outline mb-4">
                     <input  type="text" name="username" id="form2Example17" class="form-control form-control-lg" />
                     <label class="form-label" for="form2Example17">username</label>
