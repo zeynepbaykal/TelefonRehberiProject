@@ -22,5 +22,5 @@ namespace TelefonRehberiWeb.ExtraClasses
                 return builder.ToString();
             }
         }
-    }
+    }  
 }
